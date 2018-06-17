@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Normalize.css for better cross-browser consistency -->
+  <link rel="stylesheet" src="https://normalize-css.googlecode.com/svn/trunk/normalize.css">
+  <!-- Main CSS file -->
+  <link rel="stylesheet" href="build/css/main.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700">
+  <title>Restaurant Info</title>
+  <meta content="noindex,nofollow" name="robots">
+  <meta content="yes" name="apple-touch-fullscreen">
+  <meta content="Udacity, Juan Javier Moreno" name="author">
+  <meta content="JJ - Restaurant Reviews" name="description">
+  <link rel="apple-touch-icon" sizes="57x57" href="assets/icons/apple-icon-57x57.png">
+  <link rel="apple-touch-icon" sizes="60x60" href="assets/icons/apple-icon-60x60.png">
+  <link rel="apple-touch-icon" sizes="72x72" href="assets/icons/apple-icon-72x72.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="assets/icons/apple-icon-76x76.png">
+  <link rel="apple-touch-icon" sizes="114x114" href="assets/icons/apple-icon-114x114.png">
+  <link rel="apple-touch-icon" sizes="120x120" href="assets/icons/apple-icon-120x120.png">
+  <link rel="apple-touch-icon" sizes="144x144" href="assets/icons/apple-icon-144x144.png">
+  <link rel="apple-touch-icon" sizes="152x152" href="assets/icons/apple-icon-152x152.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-icon-180x180.png">
+  <link rel="icon" type="image/png" sizes="192x192"  href="assets/icons/android-icon-192x192.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="96x96" href="assets/icons/favicon-96x96.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/icons/favicon-16x16.png">
+  <link rel="manifest" href="/manifest.json">
+  <meta name="msapplication-TileColor" content="#ffffff">
+  <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+  <meta name="theme-color" content="#cab276">
+</head>
+
+<body class="inside">
+  <a href="#restaurant-container" class="skip-link" tabindex="0">Skip to main content</a>
+  <header>
+    <nav>
+      <h1><a href="/" tabindex="0">Restaurant Reviews</a></h1>
+    </nav>
+    <ul aria-label="Breadcrumbs" id="breadcrumb">
+      <li><a href="/" tabindex="0">Home</a></li>
+    </ul>
+  </header>
+
+  <main id="maincontent">
+    <section id="map-container">
+      <div role="application" id="map" tabindex="0"></div>
+    </section>
+
+    <section id="restaurant-container">
+      <h2 id="restaurant-name"></h2>
+      <img id="restaurant-img">
+      <p id="restaurant-cuisine"></p>
+      <p id="restaurant-address"></p>
+      <table id="restaurant-hours"><caption>Restaurant hours</caption></table>
+    </section>
+
+    <section id="reviews-container">
+      <ul id="reviews-list"></ul>
+    </section>
+  </main>
+
+  <footer id="footer">
+    Copyright (c) 2018 <a href="/" tabindex="0"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
+  </footer>
+
+  <script charset="utf-8" src="build/js/app.js"></script>
+  <script charset="utf-8" src="build/js/dbhelper.js"></script>
+  <script charset="utf-8" src="build/js/restaurant_info.js"></script>
+  <script charset="utf-8" src="build/js/idb.js"></script>
+  <script defer src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap"></script>
+
+</body>
+
+</html>

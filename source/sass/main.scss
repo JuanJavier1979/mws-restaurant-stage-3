@@ -1,0 +1,92 @@
+@charset "utf-8";
+@import "./variables";
+
+body,
+td,
+th,
+p {
+  font-family: $main-font-family;
+  font-size: 16px;
+  color: $copy-dark;
+  line-height: 1.5;
+}
+
+body {
+  background-color: $background;
+  margin: 0;
+  position:relative;
+}
+
+ul,
+li {
+  font-family: $main-font-family;
+  color: $copy-dark;
+}
+
+a {
+  color: $highlight;
+  text-decoration: none;
+
+  &:hover,
+  &:focus {
+    color: $white;
+    text-decoration: none;
+  }
+
+  img {
+    border: none 0px $white;
+  }
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: $main-font-family;
+  margin: 0 0 20px;
+}
+
+article,
+aside,
+canvas,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+  display: block;
+}
+
+embed,
+img,
+object,
+video {
+  max-width: 100%;
+}
+
+.skip-link {
+  position: absolute;
+  top: -56px;
+  left: 0;
+  background: $highlight;
+  color: white;
+  padding: 16px;
+  z-index: 1001;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+@import "./layout";
+@import "./components/navigation";
+@import "./components/map";
+@import "./components/filtering";
+@import "./components/listing";
+@import "./components/details";
