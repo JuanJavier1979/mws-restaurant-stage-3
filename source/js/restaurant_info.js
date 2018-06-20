@@ -55,11 +55,49 @@ const fillRestaurantHTML = (restaurant = self.restaurant) => {
   const address = document.getElementById('restaurant-address');
   address.innerHTML = restaurant.address;
 
-  const image = document.getElementById('restaurant-img');
-  image.className = 'restaurant-img'
-  image.src = DBHelper.imageUrlForRestaurant(restaurant);
-  image.srcset = DBHelper.imageSrcSetForRestaurant(restaurant);
-  image.alt = `Image of ${restaurant.name} restaurant.`;
+  const picture = document.getElementById('restaurant-img');
+  picture.className = 'restaurant-img';
+  
+  const sourcewebp = document.createElement('source');
+  sourcewebp.srcset = `/source/img/${restaurant.id}.webp`;
+  sourcewebp.setAttribute('type', 'image/webp');
+  picture.appendChild(sourcewebp);
+
+  const sourcexsmall = document.createElement('source');
+  sourcexsmall.setAttribute('media', '(min-width: 360px)');
+  sourcexsmall.srcset = DBHelper.imageUrlForRestaurant(restaurant, 'xsmall');
+  sourcexsmall.setAttribute('type', 'image/jpeg');
+  picture.appendChild(sourcexsmall);
+
+  const sourcesmall = document.createElement('source');
+  sourcesmall.setAttribute('media', '(min-width: 520px)');
+  sourcesmall.srcset = DBHelper.imageUrlForRestaurant(restaurant, 'small');
+  sourcesmall.setAttribute('type', 'image/jpeg');
+  picture.appendChild(sourcesmall);
+
+  const sourcemedium = document.createElement('source');
+  sourcemedium.setAttribute('media', '(min-width: 800px)');
+  sourcemedium.srcset = DBHelper.imageUrlForRestaurant(restaurant, 'medium');
+  sourcemedium.setAttribute('type', 'image/jpeg');
+  picture.appendChild(sourcemedium);
+
+  const sourcelarge = document.createElement('source');
+  sourcelarge.setAttribute('media', '(min-width: 1000px)');
+  sourcelarge.srcset = DBHelper.imageUrlForRestaurant(restaurant, 'large');
+  sourcelarge.setAttribute('type', 'image/jpeg');
+  picture.appendChild(sourcelarge);
+
+  const sourcedesk = document.createElement('source');
+  sourcedesk.setAttribute('media', '(min-width: 1500px)');
+  sourcedesk.srcset = `/build/img/${restaurant.id}-original.jpg`;
+  sourcedesk.setAttribute('type', 'image/jpeg');
+  picture.appendChild(sourcedesk);
+
+  const picimage = document.createElement('img');
+  picimage.className = 'restaurant-img';
+  picimage.src = DBHelper.imageUrlForRestaurant(restaurant);
+  picimage.alt = `Image of ${restaurant.name} restaurant.`;
+  picture.appendChild(picimage);
 
   const cuisine = document.getElementById('restaurant-cuisine');
   cuisine.innerHTML = restaurant.cuisine_type;
