@@ -1,4 +1,4 @@
-const version = 3;
+const version = 4;
 const appCacheName = `jjrr-cache-v${version}`;
 const urlsToCache = [
   './',
@@ -13,6 +13,16 @@ const urlsToCache = [
   'build/css/main.css',
   'assets/icons/favicon.ico',
   'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700',
+  'source/img/1.webp',
+  'source/img/2.webp',
+  'source/img/3.webp',
+  'source/img/4.webp',
+  'source/img/5.webp',
+  'source/img/6.webp',
+  'source/img/7.webp',
+  'source/img/8.webp',
+  'source/img/9.webp',
+  'source/img/10.webp',
   'build/img/1-original.jpg',
   'build/img/2-original.jpg',
   'build/img/3-original.jpg',
