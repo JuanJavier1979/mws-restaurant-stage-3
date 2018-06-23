@@ -255,7 +255,8 @@ class DBHelper {
       map: map,
       animation: google.maps.Animation.DROP}
     );
-    return marker;
+    //return marker;
+    return '';
   }
 
 }
