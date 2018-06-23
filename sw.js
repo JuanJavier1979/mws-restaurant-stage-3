@@ -1,4 +1,4 @@
-const version = 4;
+const version = 5;
 const appCacheName = `jjrr-cache-v${version}`;
 const urlsToCache = [
   './',
@@ -33,6 +33,16 @@ const urlsToCache = [
   'build/img/8-original.jpg',
   'build/img/9-original.jpg',
   'build/img/10-original.jpg',
+  'build/img/1-xsmall.jpg',
+  'build/img/2-xsmall.jpg',
+  'build/img/3-xsmall.jpg',
+  'build/img/4-xsmall.jpg',
+  'build/img/5-xsmall.jpg',
+  'build/img/6-xsmall.jpg',
+  'build/img/7-xsmall.jpg',
+  'build/img/8-xsmall.jpg',
+  'build/img/9-xsmall.jpg',
+  'build/img/10-xsmall.jpg',
   'build/img/1-small.jpg',
   'build/img/2-small.jpg',
   'build/img/3-small.jpg',
