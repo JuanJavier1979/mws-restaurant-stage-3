@@ -1,8 +1,9 @@
 let restaurants,
   neighborhoods,
-  cuisines
-var map
-var markers = []
+  cuisines,
+  observer;
+var map;
+var markers = [];
 
 /**
  * Fetch all neighborhoods and set their HTML.
@@ -133,6 +134,24 @@ const fillRestaurantsHTML = (restaurants = self.restaurants) => {
   //addMarkersToMap();
 }
 
+
+/**
+ * Add image lazyloading using IntersectionObserver
+ */
+observer = new IntersectionObserver(entries => {
+  for (const entry of entries) {
+    if (!entry.isIntersecting) return;
+    var targets = entry.target.childNodes;
+    for (const target of targets) {
+      target.setAttribute('srcset',target.getAttribute('data-srcset'));
+      if (target.tagName === 'IMG') {
+        target.setAttribute('src',target.getAttribute('data-srcset'));
+      }
+    }
+    observer.unobserve(entry.target);
+  }
+});
+
 /**
  * Create restaurant HTML.
  */
@@ -141,45 +160,46 @@ const createRestaurantHTML = (restaurant) => {
 
   const picture = document.createElement('picture');
   li.appendChild(picture);
+  observer.observe(picture);
 
   const sourcewebp = document.createElement('source');
-  sourcewebp.srcset = `/source/img/${restaurant.id}.webp`;
+  sourcewebp.setAttribute('data-srcset',`/source/img/${restaurant.id}.webp`);
   sourcewebp.setAttribute('type', 'image/webp');
   picture.appendChild(sourcewebp);
 
   const sourcexsmall = document.createElement('source');
   sourcexsmall.setAttribute('media', '(min-width: 360px)');
-  sourcexsmall.srcset = DBHelper.imageUrlForRestaurant(restaurant, 'xsmall');
+  sourcexsmall.setAttribute('data-srcset',DBHelper.imageUrlForRestaurant(restaurant, 'xsmall'));
   sourcexsmall.setAttribute('type', 'image/jpeg');
   picture.appendChild(sourcexsmall);
 
   const sourcesmall = document.createElement('source');
   sourcesmall.setAttribute('media', '(min-width: 520px)');
-  sourcesmall.srcset = DBHelper.imageUrlForRestaurant(restaurant, 'small');
+  sourcesmall.setAttribute('data-srcset',DBHelper.imageUrlForRestaurant(restaurant, 'small'));
   sourcesmall.setAttribute('type', 'image/jpeg');
   picture.appendChild(sourcesmall);
 
   const sourcemedium = document.createElement('source');
   sourcemedium.setAttribute('media', '(min-width: 800px)');
-  sourcemedium.srcset = DBHelper.imageUrlForRestaurant(restaurant, 'medium');
+  sourcemedium.setAttribute('data-srcset',DBHelper.imageUrlForRestaurant(restaurant, 'medium'));
   sourcemedium.setAttribute('type', 'image/jpeg');
   picture.appendChild(sourcemedium);
 
   const sourcelarge = document.createElement('source');
   sourcelarge.setAttribute('media', '(min-width: 1000px)');
-  sourcelarge.srcset = DBHelper.imageUrlForRestaurant(restaurant, 'large');
+  sourcelarge.setAttribute('data-srcset',DBHelper.imageUrlForRestaurant(restaurant, 'large'));
   sourcelarge.setAttribute('type', 'image/jpeg');
   picture.appendChild(sourcelarge);
 
   const sourcedesk = document.createElement('source');
   sourcedesk.setAttribute('media', '(min-width: 1500px)');
-  sourcedesk.srcset = `/build/img/${restaurant.id}-original.jpg`;
+  sourcedesk.setAttribute('data-srcset',`/build/img/${restaurant.id}-original.jpg`);
   sourcedesk.setAttribute('type', 'image/jpeg');
   picture.appendChild(sourcedesk);
 
   const picimage = document.createElement('img');
   picimage.className = 'restaurant-img';
-  picimage.src = DBHelper.imageUrlForRestaurant(restaurant);
+  picimage.setAttribute('data-srcset',`/build/img/${restaurant.id}-original.jpg`);
   picimage.alt = `Image of ${restaurant.name} restaurant.`;
   picture.appendChild(picimage);
 
