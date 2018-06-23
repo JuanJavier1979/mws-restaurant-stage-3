@@ -78,7 +78,8 @@
   color: $copy-sec;
 }
 
-#restaurants-list li a {
+#restaurants-list li a,
+.post-form-button {
   background-color: $highlight;
   border-bottom: 3px solid $grey-light;
   color: $white;
