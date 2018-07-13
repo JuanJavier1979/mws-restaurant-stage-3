@@ -14,13 +14,14 @@ function registerSW() {
 
 const connectionStatus = (connected) => {
   if (connected) {
-    //console.log("we are ONLINE!");
     let elAlert = document.getElementById('offlinealert');
     if(elAlert) {
       elAlert.parentElement.removeChild(elAlert);
     }
+    DBHelper.checkOfflineReviews().then(reviews => {
+      reviews.forEach((review) => DBHelper.removeOfflineReview(review));
+    })
   } else {
-    //console.log("going offline!");
     let offlineAlert = document.createElement('p');
     offlineAlert.id = 'offlinealert';
     offlineAlert.setAttribute('role', 'alert');

@@ -5,45 +5,46 @@ var map;
  * Initialize Google map, called from HTML.
  */
 window.initMap = () => {
-  fetchRestaurantFromURL((error, restaurant) => {
-    if (error) { // Got an error!
-      console.error(error);
-    } else {
-     /* self.map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 16,
-        center: restaurant.latlng,
-        scrollwheel: false
-      });*/
-      fillBreadcrumb();
-      //DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
-    }
+  self.map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 16,
+    center: restaurant.latlng,
+    scrollwheel: false
   });
+  DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
 }
 
 /**
  * Get current restaurant from page URL.
  */
-const fetchRestaurantFromURL = (callback) => {
-  if (self.restaurant) { // restaurant already fetched!
-    callback(null, self.restaurant)
-    return;
-  }
-  const id = getParameterByName('id');
-  if (!id) { // no id found in URL
-    const error = 'No restaurant id in URL'
-    callback(error, null);
-  } else {
-    DBHelper.fetchRestaurantById(id, (error, restaurant) => {
-      self.restaurant = restaurant;
-      if (!restaurant) {
-        console.error(error);
-        return;
-      }
-      fillRestaurantHTML();
-      callback(null, restaurant)
-    });
-  }
+const fetchRestaurantFromURL = () => {
+  return new Promise((resolve, reject) => {
+    if (self.restaurant) { // restaurant already fetched!
+      return resolve(self.restaurant)
+    }
+    const id = getParameterByName('id');
+    if (!id) { // no id found in URL
+      const error = 'No restaurant id in URL'
+      return reject(error);
+    } else {
+      DBHelper.fetchRestaurantById(id, (error, restaurant) => {
+        self.restaurant = restaurant;
+        if (!restaurant) {
+          return reject(error);
+        }
+        fillRestaurantHTML();
+        DBHelper.fetchReviewByRestaurant(restaurant.id)
+        .then((reviews) => {
+          fillReviewsHTML(reviews);
+          return resolve(self.restaurant);
+        }).catch(err => {
+          return reject(err);
+        })
+        //return resolve(self.restaurant);
+      });
+    }
+  });
 }
+
 
 /**
  * Create restaurant HTML and add it to the webpage
@@ -106,8 +107,6 @@ const fillRestaurantHTML = (restaurant = self.restaurant) => {
   if (restaurant.operating_hours) {
     fillRestaurantHoursHTML();
   }
-  // fill reviews
-  fillReviewsHTML();
 }
 
 /**
@@ -162,7 +161,7 @@ const createReviewHTML = (review) => {
   li.appendChild(name);
 
   const date = document.createElement('p');
-  date.innerHTML = review.date;
+  date.innerHTML = new Date(review.updatedAt).toLocaleDateString();
   li.appendChild(date);
 
   const rating = document.createElement('p');
@@ -180,6 +179,7 @@ const createReviewHTML = (review) => {
  * Add restaurant name to the breadcrumb navigation menu
  */
 const fillBreadcrumb = (restaurant=self.restaurant) => {
+  //console.log('fillBreadcrumb()');
   const breadcrumb = document.getElementById('breadcrumb');
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;
@@ -201,3 +201,46 @@ const getParameterByName = (name, url) => {
     return '';
   return decodeURIComponent(results[2].replace(/\+/g, ' '));
 }
+
+/**
+ * Catch the restaurant review form action.
+ */
+const submitReview = () => {
+  let review = {};
+  let formEl = document.getElementById('post-review-form');
+  for (let i = 0; i < formEl.length; ++i) {
+    let fieldName = formEl[i].name;
+    let value = formEl[i].value;
+    if (fieldName === "" || value === "") continue;
+    if (fieldName === "restaurant_id" || fieldName === "rating") {
+      value = parseInt(value);
+    }
+    review[formEl[i].name] = value;
+  }
+  console.log('submitReview()');
+  console.log(review);
+  formEl.reset();
+  DBHelper.sendReview(review);
+}
+
+
+
+/**
+ * Init
+ */
+(()=> {
+  console.log('Init!!!')
+  fetchRestaurantFromURL()
+  .then((restaurant) => {
+    fillBreadcrumb();
+    let form = document.getElementById('post-review-form');
+    form.addEventListener('submit', function(ev) {
+      ev.preventDefault();
+      console.log('form.submit')
+      submitReview();
+    })
+  })
+  .catch((err) => {
+    console.error('Init Error: ', err);
+  });
+})();
