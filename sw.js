@@ -1,9 +1,19 @@
-const version = 5;
+const version = 6;
 const appCacheName = `jjrr-cache-v${version}`;
 const urlsToCache = [
-  './',
+  '/',
   'index.html',
   'restaurant.html',
+  'restaurant.html?id=1',
+  'restaurant.html?id=2',
+  'restaurant.html?id=3',
+  'restaurant.html?id=4',
+  'restaurant.html?id=5',
+  'restaurant.html?id=6',
+  'restaurant.html?id=7',
+  'restaurant.html?id=8',
+  'restaurant.html?id=9',
+  'restaurant.html?id=10',
   'manifest.json',
   'build/js/app.js',
   'build/js/dbhelper.js',
@@ -11,7 +21,9 @@ const urlsToCache = [
   'build/js/restaurant_info.js',
   'build/js/idb.js',
   'build/css/main.css',
-  'assets/icons/favicon.ico',
+  'assets/icons/favicon-16x16.png',
+  'assets/icons/favicon-32x32.png',
+  'assets/icons/favicon-96x96.png',
   'https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700',
   'source/img/1.webp',
   'source/img/2.webp',
@@ -117,8 +129,8 @@ self.addEventListener('fetch', function(event) {
         throw error;
       });
     }).catch(function () {
-                return new Response('No cache found');
-            })
+      return new Response('No cache found');
+    })
   );
   }
 
