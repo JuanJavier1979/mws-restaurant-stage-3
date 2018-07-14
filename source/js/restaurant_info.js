@@ -208,6 +208,9 @@ const getParameterByName = (name, url) => {
 const submitReview = () => {
   let review = {};
   let formEl = document.getElementById('post-review-form');
+  let formElID = document.getElementById('restaurant_id');
+  formElID.value = parseInt(getParameterByName('id'));
+  formEl.appendChild(formElID);
   for (let i = 0; i < formEl.length; ++i) {
     let fieldName = formEl[i].name;
     let value = formEl[i].value;
