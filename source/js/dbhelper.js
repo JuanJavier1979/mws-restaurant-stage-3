@@ -352,6 +352,8 @@ class DBHelper {
       return tx.complete;
     }).then(() => {
       console.log('Review saved')
+      let event = new CustomEvent("update_reviews_list", {detail: {restaurant_id: data.restaurant_id}});
+      document.dispatchEvent(event);
     });
   }
 
@@ -388,7 +390,6 @@ class DBHelper {
         data['restaurant_id'] = parseInt(getParameterByName('id'));
         data['updatedAt'] = new Date().getTime();
         data['createdAt'] = new Date().getTime();
-        console.log('review SENT!')
         DBHelper.saveReview(data);
       })
     })

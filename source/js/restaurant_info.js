@@ -152,6 +152,17 @@ const fillReviewsHTML = (reviews = self.restaurant.reviews) => {
 }
 
 /**
+ * Remove all reviews HTML.
+ */
+const resetReviewsHTML = () => {
+  const container = document.getElementById('reviews-container');
+  container.innerHTML = "";
+  const ul = document.createElement('ul');
+  ul.id = 'reviews-list';
+  container.appendChild(ul);
+}
+
+/**
  * Create review HTML and add it to the webpage.
  */
 const createReviewHTML = (review) => {
@@ -179,7 +190,6 @@ const createReviewHTML = (review) => {
  * Add restaurant name to the breadcrumb navigation menu
  */
 const fillBreadcrumb = (restaurant=self.restaurant) => {
-  //console.log('fillBreadcrumb()');
   const breadcrumb = document.getElementById('breadcrumb');
   const li = document.createElement('li');
   li.innerHTML = restaurant.name;
@@ -220,8 +230,6 @@ const submitReview = () => {
     }
     review[formEl[i].name] = value;
   }
-  console.log('submitReview()');
-  console.log(review);
   formEl.reset();
   DBHelper.sendReview(review);
 }
@@ -232,15 +240,22 @@ const submitReview = () => {
  * Init
  */
 (()=> {
-  console.log('Init!!!')
+  console.log('rentaurant Init!!!')
   fetchRestaurantFromURL()
   .then((restaurant) => {
     fillBreadcrumb();
     let form = document.getElementById('post-review-form');
     form.addEventListener('submit', function(ev) {
       ev.preventDefault();
-      console.log('form.submit')
       submitReview();
+    })
+    document.addEventListener("update_reviews_list", ev => {
+      resetReviewsHTML()
+      DBHelper.fetchReviewByRestaurant(restaurant.id)
+      .then((reviews) => {
+        fillReviewsHTML(reviews);
+        //return resolve(self.restaurant);
+      })
     })
   })
   .catch((err) => {
