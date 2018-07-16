@@ -229,7 +229,7 @@ class DBHelper {
       if (error) {
         callback(error, null);
       } else {
-        console.log('dbhelper fetchReviews !error()')
+        //console.log('dbhelper fetchReviews !error()')
       }
     });
   }
@@ -293,8 +293,7 @@ class DBHelper {
       map: map,
       animation: google.maps.Animation.DROP}
     );
-    //return marker;
-    return '';
+    return marker;
   }
 
   /**

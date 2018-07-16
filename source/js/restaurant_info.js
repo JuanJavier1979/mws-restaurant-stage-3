@@ -2,14 +2,34 @@ let restaurant;
 var map;
 
 /**
- * Initialize Google map, called from HTML.
+ * Initialize Google map, on user input.
  */
-window.initMap = () => {
-  self.map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 16,
-    center: restaurant.latlng,
-    scrollwheel: false
-  });
+const mapToggle = () => {
+  let theMap = document.getElementById('map');
+  let toogleMapButton = document.getElementById('togglemap');
+  let buttonState = toogleMapButton.getAttribute('aria-pressed');
+  let pressed = 'false';
+  let labelText = 'Display map';
+  
+  if (buttonState === 'true') {
+    pressed = 'false';
+    labelText = 'Display map';
+    theMap.style.height = '0';
+    theMap.innerHTML = "";
+  } else {
+    self.map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 16,
+      center: restaurant.latlng,
+      scrollwheel: false
+    });
+    pressed = 'true';
+    labelText = 'Hide map';
+  }
+
+  toogleMapButton.setAttribute('aria-pressed', pressed);
+  toogleMapButton.setAttribute('aria-label', labelText);
+  toogleMapButton.innerHTML = labelText;
+
   DBHelper.mapMarkerForRestaurant(self.restaurant, self.map);
 }
 

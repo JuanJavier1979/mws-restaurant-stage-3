@@ -70,19 +70,40 @@ document.addEventListener('DOMContentLoaded', (event) => {
 });
 
 /**
- * Initialize Google map, called from HTML.
+ * Initialize Google map, on user input.
  */
-window.initMap = () => {
-  let loc = {
-    lat: 40.722216,
-    lng: -73.987501
-  };
-  self.map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 12,
-    center: loc,
-    scrollwheel: false
-  });
-  //updateRestaurants();
+const mapToggle = () => {
+  let theMap = document.getElementById('map');
+  let toogleMapButton = document.getElementById('togglemap');
+  let buttonState = toogleMapButton.getAttribute('aria-pressed');
+  let pressed = 'false';
+  let labelText = 'Display map';
+  
+  if (buttonState === 'true') {
+    pressed = 'false';
+    labelText = 'Display map';
+    theMap.style.height = '0';
+    theMap.innerHTML = "";
+  } else {
+    let loc = {
+      lat: 40.722216,
+      lng: -73.987501
+    };
+    self.map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 12,
+      center: loc,
+      scrollwheel: false
+    });
+    pressed = 'true';
+    labelText = 'Hide map';
+    theMap.style.height = '400px';
+  }
+
+  toogleMapButton.setAttribute('aria-pressed', pressed);
+  toogleMapButton.setAttribute('aria-label', labelText);
+  toogleMapButton.innerHTML = labelText;
+
+  addMarkersToMap();
 }
 
 /**
@@ -131,7 +152,6 @@ const fillRestaurantsHTML = (restaurants = self.restaurants) => {
   restaurants.forEach(restaurant => {
     ul.append(createRestaurantHTML(restaurant));
   });
-  //addMarkersToMap();
 }
 
 
