@@ -51,3 +51,4 @@ You might need to install a third party library on your system to manipulate ima
 MWS Restaurant Stage 1 Sample APP [link](https://github.com/udacity/mws-restaurant-stage-1)
 MWS Restaurant Stage 3 Data Server [link](https://github.com/udacity/mws-restaurant-stage-3)
 Jake Archibald's IDB Library [link](https://github.com/jakearchibald/idb/blob/master/lib/idb.js)
+Icons made by Smashicons [link](https://www.flaticon.com/authors/smashicons) from Flaticon [link](https://www.flaticon.com/) is licensed by Creative Commons BY 3.0 [link](http://creativecommons.org/licenses/by/3.0/)
